@@ -1,0 +1,15 @@
+fastapi==0.115.6
+uvicorn[standard]==0.34.0
+python-multipart==0.0.20
+openai==1.59.3
+pydantic==2.10.4
+sqlalchemy[asyncio]==2.0.36
+asyncpg==0.30.0
+supabase==2.11.0
+python-jose[cryptography]==3.3.0
+pdf2image==1.17.0
+pytesseract==0.3.13
+Pillow==11.1.0
+python-dotenv==1.0.1
+httpx==0.28.1
+sse-starlette==2.2.1
