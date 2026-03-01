@@ -8,7 +8,20 @@ DATABASE_URL = os.getenv(
     "postgresql+asyncpg://postgres:postgres@localhost:5432/taxlens",
 )
 
-engine = create_async_engine(DATABASE_URL, echo=False, pool_pre_ping=True)
+# Normalize: ensure the asyncpg driver prefix is present.
+# Users may set DATABASE_URL with plain "postgresql://" which causes SQLAlchemy
+# to attempt the synchronous psycopg2 driver, incompatible with create_async_engine.
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
+
+engine = create_async_engine(
+    DATABASE_URL,
+    echo=False,
+    pool_pre_ping=True,
+    # Supabase routes connections through PgBouncer in transaction mode,
+    # which does not support prepared statements. Disable the cache.
+    connect_args={"statement_cache_size": 0, "prepared_statement_cache_size": 0},
+)
 async_session = async_sessionmaker(engine, class_=AsyncSession, expire_on_commit=False)
 
 

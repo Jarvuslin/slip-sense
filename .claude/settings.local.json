@@ -5,6 +5,10 @@
       "Bash(docker compose:*)"
     ]
   },
+  "enabledMcpjsonServers": [
+    "supabase"
+  ],
   "outputStyle": "Explanatory",
-  "prefersReducedMotion": false
+  "prefersReducedMotion": false,
+  "enableAllProjectMcpServers": true
 }
